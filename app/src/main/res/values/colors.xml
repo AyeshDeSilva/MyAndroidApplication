@@ -3,7 +3,7 @@
     <color name="my_primary">#EC3271</color>
     <color name="my_secondary">#10EA26</color>
     <color name="my_statusbar">#BF14DC</color>
-    <color name="black">#FF000000</color>
+    <color name="black">#000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="my_text">#02DEFA</color>
+    <color name="my_text">#00E2FF</color>
 </resources>
