@@ -3,4 +3,14 @@
     <string name="app_name">Ayesh Android labs</string>
     <string name="hello_message">Bonjour le monde!</string>
     <string name="button_message">Je suis un bouton</string>
+    <string name="edit_message">"Je suis un EditText "</string>
+    <string name="hint_text">écris quelque chose ici</string>
+    <string name="checkbox1">Oui</string>
+    <string name="switch1">Oui</string>
+    <string name="radio1">Oui</string>
+    <string name="checkbox2">Non</string>
+    <string name="switch2">Non</string>
+    <string name="radio2">Non</string>
+
+
 </resources>

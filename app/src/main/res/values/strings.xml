@@ -1,5 +1,15 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Ayesh Android labs</string>
     <string name="hello_message">Hello world!</string>
     <string name="button_message">I\'m a button</string>
+    //lab2
+    <string name="edit_message">I\'m an EditText</string>
+    <string name="hint_text">Write something here</string>
+    <string name="checkbox1">Yes</string>
+    <string name="checkbox2">No</string>
+    <string name="switch1">Yes</string>
+    <string name="switch2">No</string>
+    <string name="radio1">Yes</string>
+    <string name="radio2">No</string>
+
 </resources>
