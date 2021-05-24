@@ -5,11 +5,11 @@
     //lab2
     <string name="edit_message">I\'m an EditText</string>
     <string name="hint_text">Write something here</string>
-    <string name="checkbox1">Yes</string>
-    <string name="checkbox2">No</string>
-    <string name="switch1">Yes</string>
-    <string name="switch2">No</string>
-    <string name="radio1">Yes</string>
-    <string name="radio2">No</string>
+    <string name="checkbox1">Yes Checkbox</string>
+    <string name="checkbox2">No Checkbox</string>
+    <string name="switch1">Yes Switch</string>
+    <string name="switch2">No Switch</string>
+    <string name="radio1">Yes Radio Button</string>
+    <string name="radio2">No Radio Button</string>
 
 </resources>

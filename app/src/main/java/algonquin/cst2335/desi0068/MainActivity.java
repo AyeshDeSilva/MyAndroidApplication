@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         cb1.setOnCheckedChangeListener((cbox, isChecked) -> {
             Context context = getApplicationContext();
-            CharSequence text = "You clicked on the " + cb1 + " and it is now: " + isChecked;
+            CharSequence text = "You clicked on the " + cb1.getText() + " and it is now: " + isChecked;
             int duration = Toast.LENGTH_LONG;
 
             Toast toast = Toast.makeText(context, text, duration);
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         cb2.setOnCheckedChangeListener((cbox, isChecked) -> {
             Context context = getApplicationContext();
-            CharSequence text = "You clicked on the " + cb2 + " and it is now: " + isChecked;
+            CharSequence text = "You clicked on the " + cb2.getText() + " and it is now: " + isChecked;
             int duration = Toast.LENGTH_LONG;
 
             Toast toast = Toast.makeText(context, text, duration);
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch1.setOnCheckedChangeListener((sw, isChecked) -> {
             Context context = getApplicationContext();
-            CharSequence text = "You clicked on the " + switch1 + " and it is now: " + isChecked;
+            CharSequence text = "You clicked on the " + switch1.getText() + " and it is now: " + isChecked;
             int duration = Toast.LENGTH_SHORT;
 
             Toast toast = Toast.makeText(context, text, duration);
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch2.setOnCheckedChangeListener((sw, isChecked) -> {
             Context context = getApplicationContext();
-            CharSequence text = "You clicked on the " + switch2 + " and it is now: " + isChecked;
+            CharSequence text = "You clicked on the " + switch2.getText() + " and it is now: " + isChecked;
             int duration = Toast.LENGTH_SHORT;
 
             Toast toast = Toast.makeText(context, text, duration);
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         rb1.setOnCheckedChangeListener((rbtn, isChecked) -> {
             Context context = getApplicationContext();
-            CharSequence text = "You clicked on the " + rb1 + " and it is now: " + isChecked;
+            CharSequence text = "You clicked on the " + rb1.getText() + " and it is now: " + isChecked;
             int duration = Toast.LENGTH_SHORT;
 
             Toast toast = Toast.makeText(context, text, duration);
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
         rb2.setOnCheckedChangeListener((rbtn, isChecked) -> {
             Context context = getApplicationContext();
-            CharSequence text = "You clicked on the " + rb2 + " and it is now: " + isChecked;
+            CharSequence text = "You clicked on the " + rb2.getText() + " and it is now: " + isChecked;
             int duration = Toast.LENGTH_SHORT;
 
             Toast toast = Toast.makeText(context, text, duration);
