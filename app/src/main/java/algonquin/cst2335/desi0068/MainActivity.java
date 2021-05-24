@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         cb1.setOnCheckedChangeListener((cbox, isChecked) -> {
             Context context = getApplicationContext();
-            CharSequence text = "You clicked on the " + cb1.getText() + " and it is now: " + isChecked;
+            CharSequence text = "You clicked on the " +  cb1.getText() + " and it is now: " + isChecked;
             int duration = Toast.LENGTH_LONG;
 
             Toast toast = Toast.makeText(context, text, duration);
