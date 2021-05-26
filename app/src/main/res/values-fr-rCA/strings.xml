@@ -3,4 +3,9 @@
     <string name="app_name">Ayesh Android labs</string>
     <string name="hello_message">Bonjour le monde!</string>
     <string name="button_message">Je suis un bouton</string>
+    <!-- lab 3 -->
+    <string name="spin_message">"Faire tourner le drapeau "</string>
+    <string name="button1">Bouton 1</string>
+    <string name="button2">Bouton 2</string>
+    <string name="button3">Bouton 3</string>
 </resources>
