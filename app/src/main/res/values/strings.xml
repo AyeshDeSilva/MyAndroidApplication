@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Ayesh Android labs</string>
-    <string name="hello_message">Hello world!</string>
-    <string name="button_message">I\'m a button</string>
+    <string name="email_text">Enter your email address:</string>
+    <string name="password_text">Type your password:</string>
+    <string name="edit_email">Type email here</string>
+    <string name="button_message">Login</string>
 </resources>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Ayesh Android labs</string>
-    <string name="hello_message">Bonjour le monde!</string>
-    <string name="button_message">Je suis un bouton</string>
+    <string name="email_text">Entrez votre adresse email:</string>
+    <string name="password_text">Tapez votre mot de passe:</string>
+    <string name="button_message">Connexion</string>
+    <string name="edit_email">Tapez l\'e-mail ici</string>
 </resources>
