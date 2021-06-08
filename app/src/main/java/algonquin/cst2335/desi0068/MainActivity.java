@@ -13,11 +13,13 @@ import android.widget.EditText;
 public class MainActivity extends AppCompatActivity {
 
     private static String TAG = "MainActivity";
+
     @Override
     protected void onStart() {
         super.onStart();
         Log.w("onStart()", "The application is now visible on screen");
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -46,27 +48,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-         Log.w("MainActivity","In onCreate() - Loading Widgets");
+        Log.w("MainActivity", "In onCreate() - Loading Widgets");
 
-         Button loginButton = findViewById(R.id.login_button);
-         EditText emailEditText = findViewById(R.id.editEmailText);
+        Button loginButton = findViewById(R.id.login_button);
+        EditText emailEditText = findViewById(R.id.editEmailText);
+        SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        String emailAddress = prefs.getString("LoginName", "");
+        emailEditText.setText(emailAddress);
+
 
         loginButton.setOnClickListener(clk -> {
             Intent nextPage = new Intent(MainActivity.this, SecondActivity.class);
             nextPage.putExtra("EmailAddress", emailEditText.getText().toString());
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("LoginName", emailAddress);
+            editor.apply();
+
+
             startActivity(nextPage);
         });
 
-        SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-        String emailAddress = prefs.getString("LoginName", "");
-        emailEditText.setText(emailAddress);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("LoginName", emailAddress);
-        editor.apply();
 
     }
-
-    
 
 
 }
