@@ -23,7 +23,7 @@ import java.io.FileOutputStream;
 
 public class SecondActivity extends AppCompatActivity {
 
-
+    ImageView profileImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,15 +32,25 @@ public class SecondActivity extends AppCompatActivity {
         Button btn = findViewById(R.id.callbutton);
         EditText phoneNumber = findViewById(R.id.editTextPhone);
         Button btn2 = findViewById(R.id.button2);
-        ImageView profileImage = findViewById(R.id.imageView);
+        profileImage = findViewById(R.id.imageView);
 
         Intent fromPrevious = getIntent();
         String emailAddress = fromPrevious.getStringExtra("EmailAddress");
         text.setText("Welcome back " + emailAddress);
 
+        SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        String phoneNumber1 = prefs.getString("PhoneNumber", "");
+        phoneNumber.setText(phoneNumber1);
+
         btn.setOnClickListener( clk -> {
+            String phoneNumber2 = phoneNumber.getText().toString();
             Intent call = new Intent(Intent.ACTION_DIAL);
-            call.setData(Uri.parse("tel: " + phoneNumber.getText().toString()));
+            call.setData(Uri.parse("tel: " + phoneNumber2));
+
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("PhoneNumber", phoneNumber2);
+            editor.apply();
+
             startActivityForResult(call, 5432);
         });
 
@@ -63,6 +73,7 @@ public class SecondActivity extends AppCompatActivity {
         if(requestCode == 3456) {
             if (resultCode == RESULT_OK) {
                 Bitmap thumbnail = data.getParcelableExtra("data");
+                profileImage.setImageBitmap( thumbnail );
                 FileOutputStream fOut = null;
                 try {
                     fOut = openFileOutput( "Picture.png", Context.MODE_PRIVATE);
@@ -80,8 +91,6 @@ public class SecondActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-//        SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-//        prefs.getString("phoneNumber", "");
 
     }
 

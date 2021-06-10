@@ -52,18 +52,17 @@ public class MainActivity extends AppCompatActivity {
 
         Button loginButton = findViewById(R.id.login_button);
         EditText emailEditText = findViewById(R.id.editEmailText);
+
         SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
         String emailAddress = prefs.getString("LoginName", "");
         emailEditText.setText(emailAddress);
-
-
         loginButton.setOnClickListener(clk -> {
             Intent nextPage = new Intent(MainActivity.this, SecondActivity.class);
             nextPage.putExtra("EmailAddress", emailEditText.getText().toString());
+            String emailAddress1 = emailEditText.getText().toString();
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("LoginName", emailAddress);
+            editor.putString("LoginName", emailAddress1);
             editor.apply();
-
 
             startActivity(nextPage);
         });
