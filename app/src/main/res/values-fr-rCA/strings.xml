@@ -5,4 +5,7 @@
     <string name="password_text">Tapez votre mot de passe:</string>
     <string name="button_message">Connexion</string>
     <string name="edit_email">Tapez l\'e-mail ici</string>
+    <string name="receive">RECEVOIR</string>
+    <string name="send">ENVOYER</string>
+    <string name="name">NOM</string>
 </resources>

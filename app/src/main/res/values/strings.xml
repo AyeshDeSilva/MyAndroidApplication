@@ -4,4 +4,8 @@
     <string name="password_text">Type your password:</string>
     <string name="edit_email">Type email here</string>
     <string name="button_message">Login</string>
+    <string name="receive">RECIEVE</string>
+    <string name="send">SEND</string>
+    <string name="name">Name</string>
+
 </resources>
