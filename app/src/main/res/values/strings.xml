@@ -7,5 +7,7 @@
     <string name="receive">RECIEVE</string>
     <string name="send">SEND</string>
     <string name="name">Name</string>
+    <string name="messageText" translatable="false">Message goes here</string>
+    <string name="time" translatable="false">Time goes here</string>
 
 </resources>
