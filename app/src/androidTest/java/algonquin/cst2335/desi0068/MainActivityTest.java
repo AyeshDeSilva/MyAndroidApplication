@@ -74,7 +74,7 @@ public class MainActivityTest {
     }
 
     /**
-     * testFindMissingUpperCase fails if it has no UpperCase in the password
+     * testFindMissingUpperCase fails if password has no UpperCase in the password
      */
     @Test
     public void testFindMissingUpperCase() {
@@ -97,7 +97,7 @@ public class MainActivityTest {
     }
 
     /**
-     * testFindMissingLowerCase fails if it has no LowerCase in the password
+     * testFindMissingLowerCase fails if password has no LowerCase in the password
      */
     @Test
     public void testFindMissingLowerCase() {
@@ -120,7 +120,7 @@ public class MainActivityTest {
     }
 
     /**
-     * testFindMissingMissingDigits fails if it has no numbers in the password
+     * testFindMissingMissingDigits fails if password has no numbers in the password
      */
     @Test
     public void testFindMissingDigits() {
@@ -143,7 +143,7 @@ public class MainActivityTest {
     }
 
     /**
-     * testFindMissingSpecialCharacters fails if it has no special characters in password
+     * testFindMissingSpecialCharacters fails if password has no special characters in password
      */
     @Test
     public void testFindMissingSpecialCharacters() {
