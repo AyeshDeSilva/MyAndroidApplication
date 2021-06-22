@@ -36,8 +36,8 @@ public class MainActivityTest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
-    /** mainActivityTest function is to test that the password fails
-     *
+    /**
+     * mainActivityTest function is to test that the password fails
      */
     @Test
     public void mainActivityTest() {
@@ -73,8 +73,8 @@ public class MainActivityTest {
         };
     }
 
-    /**testFindMissingUpperCase is to test if the password input has no uppercase
-     *
+    /**
+     * testFindMissingUpperCase fails if it has no UpperCase in the password
      */
     @Test
     public void testFindMissingUpperCase() {
@@ -96,8 +96,8 @@ public class MainActivityTest {
 
     }
 
-    /**testFindMissingUpperCase is to test if the password input has no lowercase
-     *
+    /**
+     * testFindMissingLowerCase fails if it has no LowerCase in the password
      */
     @Test
     public void testFindMissingLowerCase() {
@@ -119,8 +119,8 @@ public class MainActivityTest {
 
     }
 
-    /**testFindMissingDigits is to test if the password input has no numbers
-     *
+    /**
+     * testFindMissingMissingDigits fails if it has no numbers in the password
      */
     @Test
     public void testFindMissingDigits() {
@@ -142,8 +142,8 @@ public class MainActivityTest {
 
     }
 
-    /**testFindMissingDigits is to test if the password input has no special characters
-     *
+    /**
+     * testFindMissingSpecialCharacters fails if it has no special characters in password
      */
     @Test
     public void testFindMissingSpecialCharacters() {
@@ -165,8 +165,8 @@ public class MainActivityTest {
 
     }
 
-    /**testFindPasswordMeetsRequirements is to test if the password input meets all the requirements
-     *
+    /**
+     * testFindPasswordMeetsRequirements passes if the password meets all requirements
      */
     @Test
     public void testFindPasswordMeetsRequirements() {
