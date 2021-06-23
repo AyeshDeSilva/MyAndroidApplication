@@ -34,7 +34,7 @@ public class ChatRoom extends AppCompatActivity {
 
         EditText text = findViewById(R.id.editText);
         Button send = findViewById(R.id.sendbtn);
-        Button recieve = findViewById(R.id.retrievebtn);
+        Button receive = findViewById(R.id.retrievebtn);
         chatList = findViewById(R.id.myrecycler);
         chatList.setAdapter(new MyChatAdapter());
 
@@ -53,7 +53,7 @@ public class ChatRoom extends AppCompatActivity {
             adt.notifyItemInserted(messages.size() - 1);
         });
 
-        recieve.setOnClickListener(clk -> {
+        receive.setOnClickListener(clk -> {
             ChatMessage thisMessage = new ChatMessage(text.getText().toString(), 2, currentDateandTime);
             messages.add(thisMessage);
             text.setText("");
