@@ -184,7 +184,7 @@ public class MainActivityTest {
         //find the text view
         ViewInteraction textView = onView(withId(R.id.textView));
         //check the text
-        textView.check(matches(withText("Your password is complex enough")));
+        textView.check(matches(withText("Your password meets the requirements")));
 
     }
 
