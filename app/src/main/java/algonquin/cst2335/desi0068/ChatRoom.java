@@ -87,7 +87,7 @@ public class ChatRoom extends AppCompatActivity {
                             Snackbar.make(messageText, "You deleted message # " + position, Snackbar.LENGTH_LONG)
                                     .setAction("Undo", click -> {
 
-messages.add(position, removedMessage);//reinsert
+                                        messages.add(position, removedMessage);//reinsert
                                         adt.notifyItemInserted(position);
                                     }).show();
 
