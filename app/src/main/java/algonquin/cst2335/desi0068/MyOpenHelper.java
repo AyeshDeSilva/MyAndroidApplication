@@ -22,16 +22,16 @@ public class MyOpenHelper extends SQLiteOpenHelper {
     //This function is used to create your database file in case none exits
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("Create table " + TABLE_NAME + "(_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-        + col_message + " TEXT,"
-        + col_send_receive + " INTEGER,"
-        + col_time_sent + " TEXT);");
+        db.execSQL("Create TABLE " + TABLE_NAME + "( _id INTEGER PRIMARY KEY AUTOINCREMENT , "
+        + col_message + " TEXT ,"
+        + col_send_receive + " INTEGER ,"
+        + col_time_sent + " TEXT );");
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if exists " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
 
     }
