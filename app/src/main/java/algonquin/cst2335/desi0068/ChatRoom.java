@@ -31,6 +31,7 @@ public class ChatRoom extends AppCompatActivity {
     RecyclerView chatList;
     ArrayList<ChatMessage> messages = new ArrayList<>();
     MyChatAdapter adt;
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +45,9 @@ public class ChatRoom extends AppCompatActivity {
         chatList.setAdapter(new MyChatAdapter());
 
         MyOpenHelper opener = new MyOpenHelper(this);
-        SQLiteDatabase db = opener.getWritableDatabase();
+        db = opener.getWritableDatabase();
 
         Cursor results = db.rawQuery("SELECT * FROM " + MyOpenHelper.TABLE_NAME + ";", null);
-
         int _idCol = results.getColumnIndex("_id");
         int messageCol = results.getColumnIndex(MyOpenHelper.col_message);
         int sendCol = results.getColumnIndex(MyOpenHelper.col_send_receive);
@@ -126,11 +126,20 @@ public class ChatRoom extends AppCompatActivity {
                             messages.remove(position);
                             adt.notifyItemRemoved(position);
 
+                            db.delete(MyOpenHelper.TABLE_NAME, "_id=?", new String[] {Long.toString(removedMessage.getId())});
+
                             Snackbar.make(messageText, "You deleted message # " + position, Snackbar.LENGTH_LONG)
                                     .setAction("Undo", click -> {
 
                                         messages.add(position, removedMessage);//reinsert
                                         adt.notifyItemInserted(position);
+
+                                        db.execSQL("INSERT INTO " + MyOpenHelper.TABLE_NAME + " VALUES('" + removedMessage.getId() +
+                                                "','" + removedMessage.getMessage() +
+                                                "','" + removedMessage.getSendOrReceive() +
+                                                "','" + removedMessage.getTimeSent() + "');");
+                                       // db.rawQuery("INSERT INTO " + MyOpenHelper.TABLE_NAME + " 'WHERE' _id 'like ? AND 'TimeSent 'LIKE ? AND 'SendOrReceive 'LIKE ?;", new String[]{"?", "?", "?"});
+
                                     }).show();
 
                         })
