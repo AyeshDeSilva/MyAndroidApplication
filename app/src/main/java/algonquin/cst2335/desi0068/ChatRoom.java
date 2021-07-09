@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 public class ChatRoom extends AppCompatActivity {
 
     boolean isTablet = false;
+    MessageListFragment chatFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +19,7 @@ public class ChatRoom extends AppCompatActivity {
 
         isTablet = findViewById(R.id.detailsRoom) != null;
 
-        MessageListFragment chatFragment = new MessageListFragment();
+        chatFragment = new MessageListFragment();
         //FragmentManager object, which is a Singleton object
         FragmentManager fMgr = getSupportFragmentManager();
         //Fragment Transactions can add, replace or remove a fragment
@@ -34,9 +35,20 @@ public class ChatRoom extends AppCompatActivity {
 
         if (isTablet) {
 
+            //A tablet has a second fragment with id detailsRoom to load a second fragment
+            getSupportFragmentManager().beginTransaction().replace(R.id.detailsRoom,mdFragment).commit();
+
         } else { // on a phone
 
+            //The chat list is already loaded in the FrameLayout with id fragmentRoom, now load a second fragment over top of the list
+            getSupportFragmentManager().beginTransaction().add(R.id.fragmentRoom, mdFragment).commit();
+
         }
+
+    }
+
+    public void notifyMessageDeleted(MessageListFragment.ChatMessage chosenMessage, int chosenPosition) {
+        chatFragment.notifyMessageDeleted(chosenMessage, chosenPosition);
 
     }
 }

@@ -29,13 +29,14 @@ public class MessageListFragment extends Fragment {
     ArrayList<ChatMessage> messages = new ArrayList<>();
     MyChatAdapter adt;
     SQLiteDatabase db;
+    Button send;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View chatLayout = inflater.inflate(R.layout.chatlayout, container, false);
 
         EditText text = chatLayout.findViewById(R.id.editText);
-        Button send = chatLayout.findViewById(R.id.sendbtn);
+        send = chatLayout.findViewById(R.id.sendbtn);
         Button receive = chatLayout.findViewById(R.id.retrievebtn);
         chatList = chatLayout.findViewById(R.id.myrecycler);
         chatList.setAdapter(new MyChatAdapter());
@@ -100,6 +101,35 @@ public class MessageListFragment extends Fragment {
 
     }
 
+    public void notifyMessageDeleted(ChatMessage chosenMessage, int chosenPosition) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("Do you want to delete this message: " + chosenMessage.getMessage())
+                .setTitle("Question: ")
+                .setNegativeButton("Cancel", (dialog, c1) -> { })
+                .setPositiveButton("Delete", (dialog, c1) -> {
+
+                    ChatMessage removedMessage = messages.get(chosenPosition);
+                    messages.remove(chosenPosition);
+                    adt.notifyItemRemoved(chosenPosition);
+
+                    db.delete(MyOpenHelper.TABLE_NAME, "_id=?", new String[] {Long.toString(removedMessage.getId())});
+
+                    Snackbar.make(send, "You deleted message # " + chosenPosition, Snackbar.LENGTH_SHORT)
+                            .setAction("UNDO", click -> {
+                                messages.add(chosenPosition, removedMessage);//reinsert
+                                adt.notifyItemInserted(chosenPosition);
+                                db.execSQL("INSERT INTO " + MyOpenHelper.TABLE_NAME + " VALUES('" + removedMessage.getId() +
+                                        "','" + removedMessage.getMessage() +
+                                        "','" + removedMessage.getSendOrReceive() +
+                                        "','" + removedMessage.getTimeSent() + "');");
+
+                            }).show();
+
+                })
+                .create().show();
+    }
+
+
 
     private class MyRowView extends RecyclerView.ViewHolder {
 
@@ -114,38 +144,6 @@ public class MessageListFragment extends Fragment {
                 ChatRoom parentActivity = (ChatRoom)getContext();
                 int position = getAbsoluteAdapterPosition();
                 parentActivity.userClickedMessage(messages.get(position), position);
-               /*
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setMessage("Do you want to delete this message: " + messageText.getText())
-                        .setTitle("Question: ")
-                        .setNegativeButton("No", (dialog, c1) -> {
-                        })
-                        .setPositiveButton("Yes", (dialog, c1) -> {
-
-                            position = getAbsoluteAdapterPosition();
-
-                            ChatMessage removedMessage = messages.get(position);
-                            messages.remove(position);
-                            adt.notifyItemRemoved(position);
-
-                            db.delete(MyOpenHelper.TABLE_NAME, "_id=?", new String[] {Long.toString(removedMessage.getId())});
-
-                            Snackbar.make(messageText, "You deleted message # " + position, Snackbar.LENGTH_LONG)
-                                    .setAction("Undo", click -> {
-
-                                        messages.add(position, removedMessage);//reinsert
-                                        adt.notifyItemInserted(position);
-
-                                        db.execSQL("INSERT INTO " + MyOpenHelper.TABLE_NAME + " VALUES('" + removedMessage.getId() +
-                                                "','" + removedMessage.getMessage() +
-                                                "','" + removedMessage.getSendOrReceive() +
-                                                "','" + removedMessage.getTimeSent() + "');");
-                                        // db.rawQuery("INSERT INTO " + MyOpenHelper.TABLE_NAME + " 'WHERE' _id 'like ? AND 'TimeSent 'LIKE ? AND 'SendOrReceive 'LIKE ?;", new String[]{"?", "?", "?"});
-
-                                    }).show();
-
-                        })
-                        .create().show(); */
 
             });
 

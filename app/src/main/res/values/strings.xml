@@ -9,11 +9,11 @@
     <string name="name">Name</string>
     <string name="messageText" translatable="false">Message goes here</string>
     <string name="time" translatable="false">Time goes here</string>
-    <string name="message_goes_here">Message goes here</string>
-    <string name="time_goes_here">Time goes here</string>
-    <string name="send_or_receive">send or receive goes here</string>
-    <string name="database_id">Database id goes here</string>
-    <string name="delete">Delete</string>
-    <string name="close">Close</string>
+    <string name="message_goes_here" translatable="false">Message goes here</string>
+    <string name="time_goes_here" translatable="false">Time goes here</string>
+    <string name="send_or_receive" translatable="false">send receive goes here</string>
+    <string name="database_id" translatable="false">Database id goes here</string>
+    <string name="delete" translatable="false">Delete</string>
+    <string name="close" translatable="false">Close</string>
 
 </resources>
