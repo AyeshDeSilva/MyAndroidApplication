@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Ayesh Android labs</string>
-    <string name="hello_message">Type your password</string>
-    <string name="button_message">Login</string>
+    <string name="text_message">Type in the name of the city:</string>
+    <string name="button_message">GET FORECAST</string>
+    <string name="city_name" translatable="false">Type city name here</string>
+    <string name="temp">Temp goes here</string>
+    <string name="max">Max goes here</string>
+    <string name="humidity">Humidity goes here</string>
+    <string name="description">Description goes here</string>
 </resources>
