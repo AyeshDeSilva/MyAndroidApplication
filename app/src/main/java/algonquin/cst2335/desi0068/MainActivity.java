@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private String stringUrl;
     Button forecastBtn;
     EditText cityText;
+    Bitmap image = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                     int vis = theDocument.getInt("visibility");
                     String name = theDocument.getString("name");
 
-                    Bitmap image = null;
+
                     File file = new File(getFilesDir(), iconName + ".png");
                     if (file.exists()) {
                         image = BitmapFactory.decodeFile(getFilesDir() + "/" + iconName + ".png");
