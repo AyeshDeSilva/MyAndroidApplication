@@ -26,7 +26,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -35,11 +37,8 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
-
-    /**
-     * This string represents the address of the server as will connect to
-     */
-    private String stringUrl;
+    /**This string represents the address of the server we will connect to**/
+    private String stringURL;
     Button forecastBtn;
     EditText cityText;
     Bitmap image = null;
@@ -48,28 +47,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         forecastBtn = findViewById(R.id.forecastBtn);
         cityText = findViewById(R.id.cityTextField);
+        forecastBtn.setOnClickListener((click) -> {
 
-
-        Executor newThread = Executors.newSingleThreadExecutor();
-        newThread.execute(() -> {
-            /* This runs in another thread */
-            forecastBtn.setOnClickListener((click) -> {
+            Executor newThread = Executors.newSingleThreadExecutor();
+            newThread.execute(() -> {
+                //this runs on another thread
                 try {
                     String cityName = cityText.getText().toString();
-
-                /*"UTF-8" just means convert it to a string using 8-bit characters instead of 16 or 32 bit characters
-                URLEncoder.encode(stringToEncode); It will go through the string that is passed in and change all spaces to "+" instead  */
-                    stringUrl = "https://api.openweathermap.org/data/2.5/weather?q="
+                    stringURL = "https://api.openweathermap.org/data/2.5/weather?q="
                             + URLEncoder.encode(cityName, "UTF-8")
-                            + "&appid=7e943c97096a9784391a981c4d878b22";
+                            + "&appid=7e943c97096a9784391a981c4d878b22&units=metric";
 
-                    // URL object and you pass in the URL of the server you want to connect to as a String
-                    URL url = new URL(stringUrl);
-                    //connects to the server
+                    // Creates a URL object and you pass in the URL of the server you want to connect to as a String.
+                    URL url = new URL(stringURL);
+                    //connects to the server,
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                    //waits for a response from the server. The incoming data is represented as an InputStream
+                    //Waits for a response from the server.
                     InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 
                     String text = (new BufferedReader(
@@ -77,18 +73,9 @@ public class MainActivity extends AppCompatActivity {
                             .lines()
                             .collect(Collectors.joining("\n"));
 
-                    JSONObject theDocument = new JSONObject(text);
-                    JSONArray theArray = new JSONArray(text);
-
-                    JSONObject coord = theDocument.getJSONObject("coord");
+                    JSONObject theDocument = new JSONObject(text); //convert String to JASONObject
                     JSONArray weatherArray = theDocument.getJSONArray("weather");
                     JSONObject position0 = weatherArray.getJSONObject(0);
-
-                    JSONObject mainObject = theDocument.getJSONObject("main");
-                    double current = mainObject.getDouble("temp");
-                    double min = mainObject.getDouble("temp_min");
-                    double max = mainObject.getDouble("temp_max");
-                    int humidity = mainObject.getInt("humidity");
 
                     String description = position0.getString("description");
                     String iconName = position0.getString("icon");
@@ -96,30 +83,25 @@ public class MainActivity extends AppCompatActivity {
                     int vis = theDocument.getInt("visibility");
                     String name = theDocument.getString("name");
 
+                    JSONObject mainObj = theDocument.getJSONObject("main"); //main object
+                    double current = mainObj.getDouble("temp");
+                    double min = mainObj.getDouble("temp_min");
+                    double max = mainObj.getDouble("temp_max");
+                    int humidity = mainObj.getInt("humidity");
 
+                    //download that URL and store it as a bitmap
                     File file = new File(getFilesDir(), iconName + ".png");
                     if (file.exists()) {
                         image = BitmapFactory.decodeFile(getFilesDir() + "/" + iconName + ".png");
                     } else {
-                        URL imgURL = new URL("https://openweathermap.org/img/w/" + iconName + ".png");
-                        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                        URL imgUrl = new URL("https://openweathermap.org/img/w/" + iconName + ".png");
+                        HttpURLConnection connection = (HttpURLConnection) imgUrl.openConnection();
                         connection.connect();
                         int responseCode = connection.getResponseCode();
                         if (responseCode == 200) {
                             image = BitmapFactory.decodeStream(connection.getInputStream());
                             image.compress(Bitmap.CompressFormat.PNG, 100, openFileOutput(iconName + ".png", Activity.MODE_PRIVATE));
-
                         }
-                    }
-
-                    FileOutputStream fOut = null;
-                    try {
-                        fOut = openFileOutput(iconName + ".png", Context.MODE_PRIVATE);
-                        image.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-                        fOut.flush();
-                        fOut.close();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
                     }
 
                     runOnUiThread(() -> {
@@ -127,16 +109,16 @@ public class MainActivity extends AppCompatActivity {
                         tv.setText("The current temperature is " + current);
                         tv.setVisibility(View.VISIBLE);
 
-                        tv = findViewById(R.id.minTemp);
-                        tv.setText("The min temperature is " + current);
+                        tv = findViewById(R.id.maxTemp);
+                        tv.setText("The min temperature is " + min);
                         tv.setVisibility(View.VISIBLE);
 
-                        tv = findViewById(R.id.maxTemp);
-                        tv.setText("The max temperature is " + current);
+                        tv = findViewById(R.id.minTemp);
+                        tv.setText("The max temperature is " + max);
                         tv.setVisibility(View.VISIBLE);
 
                         tv = findViewById(R.id.humidity);
-                        tv.setText("The humidity temperature is " + current);
+                        tv.setText("The humidity is " + humidity + "%");
                         tv.setVisibility(View.VISIBLE);
 
                         tv = findViewById(R.id.description);
@@ -146,18 +128,16 @@ public class MainActivity extends AppCompatActivity {
                         ImageView iv = findViewById(R.id.icon);
                         iv.setImageBitmap(image);
                         iv.setVisibility(View.VISIBLE);
-
                     });
 
-
-                } catch (IOException | JSONException ioe) {
-                    Log.e("Connection error:", ioe.getMessage());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-
-
             });
         });
-
     }
-
 }
