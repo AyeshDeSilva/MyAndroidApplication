@@ -123,11 +123,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
-               /*     String text = (new BufferedReader(
-                            new InputStreamReader(in, StandardCharsets.UTF_8)))
-                            .lines()
-                            .collect(Collectors.joining("\n"));
-*/
                     //download that URL and store it as a bitmap
                     File file = new File(getFilesDir(), iconName + ".png");
                     if (file.exists()) {
