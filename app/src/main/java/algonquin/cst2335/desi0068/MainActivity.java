@@ -1,5 +1,6 @@
 package algonquin.cst2335.desi0068;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -9,12 +10,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
     String humidity = null;
     String description = null;
     String iconName = null;
+    Toolbar myToolBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         forecastBtn = findViewById(R.id.forecastBtn);
         cityText = findViewById(R.id.cityTextField);
 
+        myToolBar = findViewById(R.id.toolbar);
+        setSupportActionBar(myToolBar);
 
         forecastBtn.setOnClickListener((click) -> {
             String cityName = cityText.getText().toString();
@@ -172,4 +181,33 @@ public class MainActivity extends AppCompatActivity {
             });
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_actions, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
+
+        switch(item.getItemId()){
+            case  R.id.hide_views:
+                current.setVisibility(View.INVISIBLE);
+                max.setVisibility(View.INVISIBLE);
+                min.setVisibility(View.INVISIBLE);
+                humidity.setVisibility(View.INVISIBLE);
+                description.setVisibility(View.INVISIBLE);
+                iconName.setVisibility(View.INVISIBLE);
+                cityText.setVisibility(View.INVISIBLE);
+
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }
