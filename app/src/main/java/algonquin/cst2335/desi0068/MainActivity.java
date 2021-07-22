@@ -61,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
     String description = null;
     String iconName = null;
     Toolbar myToolBar;
+    TextView currentTemp = findViewById(R.id.temp);
+    TextView maxTemp = findViewById(R.id.maxTemp);
+    TextView minTemp = findViewById(R.id.minTemp);
+
 
 
     @Override
@@ -195,14 +199,23 @@ public class MainActivity extends AppCompatActivity {
 
         switch(item.getItemId()){
             case  R.id.hide_views:
-                current.setVisibility(View.INVISIBLE);
-                max.setVisibility(View.INVISIBLE);
-                min.setVisibility(View.INVISIBLE);
+                currentTemp.setVisibility(View.INVISIBLE);
+                maxTemp.setVisibility(View.INVISIBLE);
+                minTemp.setVisibility(View.INVISIBLE);
                 humidity.setVisibility(View.INVISIBLE);
                 description.setVisibility(View.INVISIBLE);
                 iconName.setVisibility(View.INVISIBLE);
-                cityText.setVisibility(View.INVISIBLE);
+                cityText.setText("");//clear the city name
+                break;
 
+            case R.id.id_increase:
+                float oldSize  = currentTemp.getTextSize();
+                float newSize  = oldSize + 1;
+                break;
+
+            case R.id.id_decrease:
+                oldSize = currentTemp.getTextSize();
+                newSize = oldSize - 1;
                 break;
         }
 
