@@ -1,15 +1,13 @@
 package algonquin.cst2335.desi0068;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,40 +17,29 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toolbar;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
-
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
     /**
      * This string represents the address of the server we will connect to
      **/
+
     private String stringURL;
     Button forecastBtn;
     EditText cityText;
+    TextView currentView, maxView, minView, descView, humidView;
+
     Bitmap image = null;
     String current = null;
     String min = null;
@@ -61,11 +48,9 @@ public class MainActivity extends AppCompatActivity {
     String description = null;
     String iconName = null;
     Toolbar myToolBar;
-    TextView currentTemp = findViewById(R.id.temp);
-    TextView maxTemp = findViewById(R.id.maxTemp);
-    TextView minTemp = findViewById(R.id.minTemp);
+    ImageView iv;
 
-
+    float newSize = 14;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +71,11 @@ public class MainActivity extends AppCompatActivity {
                     .setMessage("We're calling people in " + cityName + " to look outside their windows and tell us what's the weather like over there")
                     .setView(new ProgressBar(MainActivity.this))
                     .show();
+
+            // Gets the menu from your toolbar
+            myToolBar.getMenu().add(0,5,10,cityName).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            runForecast(cityName);
+
 
             Executor newThread = Executors.newSingleThreadExecutor();
             newThread.execute(() -> {
@@ -152,27 +142,27 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     runOnUiThread(() -> {
-                        TextView tv = findViewById(R.id.temp);
-                        tv.setText("The current temperature is " + current);
-                        tv.setVisibility(View.VISIBLE);
+                        currentView = findViewById(R.id.temp);
+                        currentView.setText("The current temperature is " + current);
+                        currentView.setVisibility(View.VISIBLE);
 
-                        tv = findViewById(R.id.maxTemp);
-                        tv.setText("The min temperature is " + min);
-                        tv.setVisibility(View.VISIBLE);
+                        maxView = findViewById(R.id.maxTemp);
+                        maxView.setText("The min temperature is " + min);
+                        maxView.setVisibility(View.VISIBLE);
 
-                        tv = findViewById(R.id.minTemp);
-                        tv.setText("The max temperature is " + max);
-                        tv.setVisibility(View.VISIBLE);
+                        minView = findViewById(R.id.minTemp);
+                        minView.setText("The max temperature is " + max);
+                        minView.setVisibility(View.VISIBLE);
 
-                        tv = findViewById(R.id.humidity);
-                        tv.setText("The humidity is " + humidity + "%");
-                        tv.setVisibility(View.VISIBLE);
+                        humidView = findViewById(R.id.humidity);
+                        humidView.setText("The humidity is " + humidity + "%");
+                        humidView.setVisibility(View.VISIBLE);
 
-                        tv = findViewById(R.id.description);
-                        tv.setText(description);
-                        tv.setVisibility(View.VISIBLE);
+                        humidView = findViewById(R.id.description);
+                        humidView.setText(description);
+                        humidView.setVisibility(View.VISIBLE);
 
-                        ImageView iv = findViewById(R.id.icon);
+                        iv = findViewById(R.id.icon);
                         iv.setImageBitmap(image);
                         iv.setVisibility(View.VISIBLE);
 
@@ -194,32 +184,49 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        return super.onOptionsItemSelected(item);
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch(item.getItemId()){
-            case  R.id.hide_views:
-                currentTemp.setVisibility(View.INVISIBLE);
-                maxTemp.setVisibility(View.INVISIBLE);
-                minTemp.setVisibility(View.INVISIBLE);
-                humidity.setVisibility(View.INVISIBLE);
-                description.setVisibility(View.INVISIBLE);
-                iconName.setVisibility(View.INVISIBLE);
+        switch (item.getItemId()) {
+            case 5:
+                String cityName = item.getTitle().toString();
+                runForecast(cityName);
+                currentView.setVisibility(View.INVISIBLE);
+                maxView.setVisibility(View.INVISIBLE);
+                minView.setVisibility(View.INVISIBLE);
+                humidView.setVisibility(View.INVISIBLE);
+                descView.setVisibility(View.INVISIBLE);
+                iv = findViewById(R.id.icon);
+                iv.setVisibility(View.INVISIBLE);
                 cityText.setText("");//clear the city name
                 break;
 
             case R.id.id_increase:
-                float oldSize  = currentTemp.getTextSize();
-                float newSize  = oldSize + 1;
+                newSize = newSize + 1;
+
+                currentView.setTextSize(newSize);
+                maxView.setTextSize(newSize);
+                minView.setTextSize(newSize);
+                humidView.setTextSize(newSize);
+                descView.setTextSize(newSize);
+                cityText.setTextSize(newSize);
                 break;
 
             case R.id.id_decrease:
-                oldSize = currentTemp.getTextSize();
-                newSize = oldSize - 1;
+                newSize = newSize - 1;
+
+                currentView.setTextSize(newSize);
+                maxView.setTextSize(newSize);
+                minView.setTextSize(newSize);
+                humidView.setTextSize(newSize);
+                descView.setTextSize(newSize);
+                cityText.setTextSize(newSize);
                 break;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    public void runForecast(String cityName) {
+
     }
 
 
