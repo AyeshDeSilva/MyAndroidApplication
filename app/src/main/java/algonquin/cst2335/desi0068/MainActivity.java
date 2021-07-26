@@ -1,9 +1,13 @@
 package algonquin.cst2335.desi0068;
 
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.graphics.Bitmap;
@@ -18,6 +22,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.google.android.material.navigation.NavigationView;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -66,6 +72,19 @@ public class MainActivity extends AppCompatActivity {
 
         myToolBar = findViewById(R.id.toolbar);
         setSupportActionBar(myToolBar);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, myToolBar, R.string.open, R.string.close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        drawer.closeDrawer(GravityCompat.START);
+        NavigationView navigationView = findViewById(R.id.popout_menu);
+        navigationView.setNavigationItemSelectedListener((item) -> {
+            onOptionsItemSelected(item);//call the function for the other toolbar
+            drawer.closeDrawer(GravityCompat.START);
+            return false;
+        });
+
 
         forecastBtn.setOnClickListener( click -> {
             String cityName = cityText.getText().toString();

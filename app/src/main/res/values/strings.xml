@@ -7,4 +7,7 @@
     <string name="max">Max goes here</string>
     <string name="humidity">Humidity goes here</string>
     <string name="description">Description goes here</string>
+    <string name="open">Open Menu</string>
+    <string name="close">Close Menu</string>
+
 </resources>
