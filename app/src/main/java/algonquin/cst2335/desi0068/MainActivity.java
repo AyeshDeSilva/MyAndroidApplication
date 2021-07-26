@@ -213,9 +213,9 @@ public class MainActivity extends AppCompatActivity {
                     humidView.setText("The humidity is " + humidity + "%");
                     humidView.setVisibility(View.VISIBLE);
 
-                    humidView = findViewById(R.id.description);
-                    humidView.setText(description);
-                    humidView.setVisibility(View.VISIBLE);
+                    descView = findViewById(R.id.description);
+                    descView.setText(description);
+                    descView.setVisibility(View.VISIBLE);
 
                     iv = findViewById(R.id.icon);
                     iv.setImageBitmap(image);
